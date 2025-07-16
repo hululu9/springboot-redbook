@@ -2,6 +2,7 @@ package com.chuwa.redbook.service.impl;
 
 import com.chuwa.redbook.dao.PostRepository;
 import com.chuwa.redbook.entity.Post;
+import com.chuwa.redbook.exception.DuplicateTitleException;
 import com.chuwa.redbook.exception.ResourceNotFoundException;
 import com.chuwa.redbook.payload.PostDto;
 import com.chuwa.redbook.payload.PostResponse;
@@ -34,6 +35,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto) {
+        // Check for duplicate title using a regular exception handler
+//        if (postRepository.existsByTitle(postDto.getTitle())) {
+//            throw new IllegalArgumentException("Post title already exists: " + postDto.getTitle());
+//        }
+
+        // Check for duplicate title using a custom API exception handler
+        if (postRepository.existsByTitle(postDto.getTitle())) {
+            throw new DuplicateTitleException(postDto.getTitle());
+        }
 
         // covert DTO to Entity
 //        Post post = mapToEntity(postDto);

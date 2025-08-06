@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM openjdk:11-jdk-slim
 WORKDIR /app
 COPY ./target/redbook-0.0.1-SNAPSHOT.jar /app/redbook-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
